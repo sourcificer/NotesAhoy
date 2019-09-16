@@ -39,15 +39,15 @@
                             <p>
                                 <strong>{{ entry.date_posted }}</strong>
                                 <br> {{ entry.text }}
-                                <a href="{% url 'edit' %}" value='todo {{ entry.id }}'>Edit</a>
+                                <!-- <a href="{% url 'edit' %}" value='todo {{ entry.id }}'>Edit</a> -->
                                 <form method="POST" action="{% url 'home' %}">
                                     {% csrf_token %}
                                     <button class='entryDelete' name='entryDelete' value='todo {{ entry.id }}' type='submit'>Delete</button>
                                 </form>
-                                <!-- <form method="POST" action="{% url 'edit' %}">
+                                <form method="GET" action="{% url 'edit' %}">
                                     {% csrf_token %}
                                     <button class='text' name='text' value='todo {{ entry.id }}' type='submit'>Edit</button>
-                                </form> -->
+                                </form>
                             </p>
                         </div>
                     </div>

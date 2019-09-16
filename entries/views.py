@@ -23,8 +23,14 @@ def home(request):
 
 def edit(request):
     print(request.method)
-    editingEntry = request.GET.get('text',None)
+    
+    if request.method == "GET":
+        editingEntry = request.GET.get('text',None)
+    else:
+        editingEntry = request.POST.get('text',None)
+    
     print(editingEntry)
+    # print(editObject)
     if editingEntry is not None:
         editingEntry = (editingEntry.split(' '))[1]
         editObject = get_object_or_404(Entry,id=editingEntry)
@@ -33,17 +39,21 @@ def edit(request):
         editObject = ''
     
     if request.method == "POST":
-        if editObject:
-            print(editObject)
-            print("[+] EDITING ENTRY")
-            form = EntryForm(request.POST,instance=editObject)
-            if form.is_valid():
-                print("[+] FORM VALID")
-                form.save()
-                print(form)
-                # return redirect('home')
+        # if editObject:
+        print(editObject)
+        print("[+] EDITING ENTRY")
+        form = EntryForm(request.POST,instance=editObject)
+        print(form)
+        if form.is_valid():
+            print("[+] FORM VALID")
+            form.save()
+            # print(form)
+            return redirect('home')
+    else:
+        form = EntryForm(instance=editObject)
     
-    return render(request,'entries/add.html',{'form':form})
+    # print(editObject.id)
+    return render(request,'entries/edit.html',{'form':form,'editObject':editObject})
 
 def add(request):
     print(request)
